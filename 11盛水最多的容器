@@ -1,0 +1,19 @@
+class Solution {
+    public int maxArea(int[] height) {
+        int left=0;
+        int right=height.length-1;
+        int s=0;
+        while(left<right){
+            s=Math.max(s,Math.min(height[left]*(right-left),height[right]*(right-left)));
+            if(height[left]<height[right])  left++;
+            else right--;
+        }
+        return s;
+    }
+}
+
+/*
+利用双指针方法， 容器在循环中受到最小的那一条边的限制  然后移动那条较小的变，计算所有的面积取最大值
+
+
+*/
