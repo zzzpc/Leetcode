@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    Map<TreeNode,Integer> f=new HashMap<TreeNode,Integer>();//分别表示选中与未选中时 当前节点权值和最大的选择
+    Map<TreeNode,Integer> g=new HashMap<TreeNode,Integer>();
+    public int rob(TreeNode root) {
+        
+            DFS(root);
+
+            return Math.max(f.getOrDefault(root,0),g.getOrDefault(root,0));
+    }
+    public int  DFS(TreeNode root){
+            if(root!=null){
+                DFS(root.left);
+                DFS(root.right);
+                f.put(root,root.val+g.getOrDefault(root.left,0)+g.getOrDefault(root.right,0));
+                g.put(root, Math.max(f.getOrDefault(root.left, 0), g.getOrDefault(root.left, 0)) + Math.max(f.getOrDefault(root.right, 0), g.getOrDefault(root.right, 0)));
+ 
+            }
+
+            return -1;
+    }
+}
+
+/*
+DP + DFS   二叉树的后序遍历   用HashMap来存储两种情况下的节点权值和  ，并利用默认的排序方式选择最大值
+状态转移方程  
+    1.选择当前节点o, 则子节点不能选择
+      当 o 被选中时，o 的左右孩子都不能被选中，故 o 被选中情况下子树上被选中点的最大权值和为 l 和 r 不被选中的最大权值和相加，即 f(o) = g(l) + g(r)
+    2.不选择当前节点o,则其子节点可以选择或是不选择
+      当 o 不被选中时，o 的左右孩子可以被选中，也可以不被选中。对于o 的某个具体的孩子x，它对o 的贡献是x 被选中和不被选中情况下权值和的较大值。故 g(o) = max { f(l) , g(l)}+max{f(r) , g(r)}
+
+
+
+
+
+
+
+
+*/
