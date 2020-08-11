@@ -1,0 +1,56 @@
+/*
+给定一个二维的矩阵，包含 'X' 和 'O'（字母 O）。
+
+找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
+
+
+
+能想到的是用深度优先遍历   
+
+判断整个数组边缘中的'O'， 对其周围四个方向进行遍历  若与它相邻的节点为'O' 则将其标记为'*' 
+最终再遍历整个数组，若为'O' 则将其标记为'X'， 若为'*'则将其标记为'O'
+
+*/
+
+
+class Solution {
+    int dir[][]={{0,1},{0,-1},{1,0},{-1,0}};
+    int raw;
+    int col;
+    public void solve(char[][] board) {
+    raw=board.length;
+    if (raw == 0) {
+            return;
+        }
+    col=board[0].length;
+    for(int i=0;i<raw;i++){
+        dfs(board,i,0);
+        dfs(board,i,col-1);
+    }
+     for(int i=0;i<col;i++){
+        dfs(board,0,i);
+        dfs(board,raw-1,i);
+    }
+
+    for(int i=0;i<raw;i++){
+        for(int j=0;j<col;j++){
+                if(board[i][j]=='*')  board[i][j]='O';
+                else if(board[i][j]=='O')   board[i][j]='X';
+        }
+    }
+    
+}
+public void dfs(char[][] board, int r, int l){
+
+            if(r<0||r>=raw|| l<0||l>=col || board[r][l]!='O') return;
+           
+            for(int k=0;k<4;k++){
+                board[r][l]='*';
+                 int tmp_col=dir[k][0]+l;
+                 int tmp_raw=dir[k][1]+r;
+                 dfs(board,tmp_raw,tmp_col);
+                }
+            
+    }
+    
+}
