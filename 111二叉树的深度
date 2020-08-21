@@ -1,0 +1,31 @@
+/*
+      利用深度遍历，最小深度等于左右子树的深度取最小值，直到根节点 
+      
+      特殊情况是 当某棵树只有左节点或只有右节点的情况时，那么最小深度就是这棵树的深度 
+
+*/
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int minDepth(TreeNode root) {
+        if(root==null)  return 0;
+        if(root.left==null && root.right==null)  return 1;
+        else{
+            int ll=minDepth(root.left);
+            int rr=minDepth(root.right);  
+            if(ll==0) return rr+1;
+            if(rr==0) return ll+1;
+            return Math.min(ll,rr)+1;
+        }
+    }
+
+}
