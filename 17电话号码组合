@@ -1,0 +1,40 @@
+
+
+
+class Solution {
+    public List<String> letterCombinations(String digits) {
+            List<String> combinations=new ArrayList<String>();
+            if(digits.length()==0)  return combinations;
+            Map<Character,String> map=new HashMap<Character,String>(){{
+            put('2', "abc");
+            put('3', "def");
+            put('4', "ghi");
+            put('5', "jkl");
+            put('6', "mno");
+            put('7', "pqrs");
+            put('8', "tuv");
+            put('9', "wxyz");
+            }};
+            backtrack(combinations,map,digits,0,new StringBuffer());
+            return combinations;
+    }
+
+    public void backtrack(List<String> combinations, Map<Character,String> phoneMap,String digits,int index,StringBuffer combination){
+        if(index==digits.length())  //表示访问到字符串的最后一个元素了
+        {
+            combinations.add(combination.toString());
+        }
+        else{
+            //如果不是，则递归访问直到最后一个元素
+            char digit=digits.charAt(index);   //访问原始串的某个元素
+            String letter=phoneMap.get(digit); //访问该数字对应的字母串
+            int lettersCount=letter.length();    //得到字母串的长度
+            for(int i=0;i<lettersCount;i++){     
+                combination.append(letter.charAt(i)); //遍历字符串
+                backtrack(combinations,phoneMap,digits,index+1,combination);
+                combination.deleteCharAt(index);  //遍历完之后即删除该元素，进而遍历下一个元素
+            }
+        }
+    }
+
+}
