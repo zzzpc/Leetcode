@@ -1,0 +1,25 @@
+
+
+/*
+  动态规划问题
+  dp[i,j]表示在i和j两个端点之间进行选择  每次以当前者的视角选择最大的值，最终判断dp[0][length-1]是否大于0,
+
+
+*/
+
+
+public boolean PredictTheWinner(int[] nums) {
+
+        int length=nums.length;
+        int [][] dp=new int[length][length];
+        for (int i = 0; i < length; i++) {
+            dp[i][i]=nums[i];
+        }
+        for(int i=length-2;i>=0;i--){
+            for(int j=i+1;j<length;j++){
+                dp[i][j]=Math.max(nums[i]-dp[i+1][j],nums[i]-dp[i][j-1]);
+            }
+        }
+        return  dp[0][length-1]>=0;
+
+    }
