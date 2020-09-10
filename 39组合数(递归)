@@ -25,3 +25,53 @@
     深度遍历，递归
     
     */
+
+
+class Solution {
+      List<int []> freq= new ArrayList<int []>();
+    List<List<Integer>> ans=new ArrayList<List<Integer>>();
+     List<Integer> combine=new ArrayList<>();
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+           Arrays.sort(candidates);
+            //统计词频  记录每个数字及其出现的次数
+            for(int num:candidates){
+                int size=freq.size();
+                if(freq.isEmpty()||num!=freq.get(size-1)[0]){
+                    freq.add(new int[]{num,1}); //如果该数字未出现过 则新添加数字
+                }
+                else{
+                    ++freq.get(size-1)[1];   //否则词频加一
+                }
+            }
+            DFS(0,target);
+            return ans;
+    }
+    
+    
+    public  void DFS(int pos,int rest){
+
+
+        if(rest==0){
+            ans.add(new ArrayList<Integer>(combine));
+            return;
+        }
+        if(pos==freq.size() || rest<freq.get(pos)[0]){
+            return;
+        }
+        DFS(pos+1,rest);   //不选择当前的数
+        int most=Math.min(rest/freq.get(pos)[0],freq.get(pos)[1]);
+        for(int i=1;i<=most;i++){
+            combine.add(freq.get(pos)[0]);
+            DFS(pos+1, rest-i*freq.get(pos)[0]);  //选择当前的数字  使其剩余的rest减少
+        }
+        for(int i=1;i<=most;i++){
+            combine.remove(combine.size()-1); //更新状态 ，移除元素
+        }
+
+    }
+}
+
+
+
+//每个数字只能使用一次的情况
