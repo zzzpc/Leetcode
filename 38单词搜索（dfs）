@@ -1,0 +1,41 @@
+class Solution {
+   
+    public static  boolean exist(char[][] board, String word){
+        int row=board.length;
+        int col=board[0].length;
+        boolean flag_[][]=new boolean[row][col];
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                boolean flag=chick(i,j,0,board,word.toCharArray(),flag_);//从每个位置深度遍历,判断是否符合要求
+                if(flag)  return true;  //如果遇到符合要求直接返回
+            }
+        }
+        return  false;
+    }
+
+    public static boolean chick(int i, int j , int k ,char[][] board,char[] word,boolean vis[][]){
+
+        if(board[i][j]!= word[k]) return false;  //如果当前字符不匹配直接返回false
+        else if(k==word.length-1) return true; //如果当前遍历的长度为字符串的长度，则直接返回true
+        vis[i][j]=true;   //否则设置当前遍历的记号为真
+        int direc[][]={{0,1},{0,-1},{1,0},{-1,0}};
+        boolean result=false;
+        for(int[] dir_s:direc){
+            int tmp_x=i+dir_s[0];
+            int tmp_y=j+dir_s[1];
+            if(tmp_x<board.length&&tmp_x>=0 && tmp_y<board[0].length&& tmp_y>=0){
+                if(!vis[tmp_x][tmp_y])  {  //如果当前位置没有访问过，则dfs
+                    boolean flag = chick(tmp_x, tmp_y, k+1, board, word, vis);
+                    if(flag){    
+                        result=true;
+                        break;
+                    }
+
+                }
+
+            }
+        }
+        vis[i][j]=false;  //复位
+        return  result;
+    }
+}
