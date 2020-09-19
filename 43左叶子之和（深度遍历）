@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int sumOfLeftLeaves(TreeNode root) {
+
+            return dfs(root);
+    }
+
+    public  int dfs(TreeNode root){
+          int  sum=0;                     
+          if(root==null) return 0;
+          else{
+                if(root.left!=null){
+                    if(isleaf(root.left))  sum+=root.left.val;  //如果左节点为叶子节点，则直接相加其节点值
+                    else    sum+=dfs(root.left);     //否则遍历左子树
+                }
+                if(root.right!=null && !isleaf(root.right)){
+                    sum+=dfs(root.right);   //如果右子树不为空且不是叶子节点，则遍历右子树
+                }
+            }
+        return sum;
+    }
+    public boolean isleaf(TreeNode root){
+        return  root.left==null && root.right==null? true:false;
+    }
+
+
+}
