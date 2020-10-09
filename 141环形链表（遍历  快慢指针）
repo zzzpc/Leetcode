@@ -1,0 +1,22 @@
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+            ListNode tmp;
+            tmp=head;
+            boolean flag=false;
+            while(head!=null && head.next!=null &&head.next.next!=null){
+                
+                head=head.next.next;
+                tmp=tmp.next;
+                if(head==tmp){
+                    flag=true;
+                    break;
+                }
+            }
+            return flag;
+    }
+}
+
+
+
+
+//设置两个不同步长的指针，一快一慢，如果有环则快指针一定可以碰到慢指针
