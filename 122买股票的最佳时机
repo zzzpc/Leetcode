@@ -1,0 +1,28 @@
+//动态规划  每天买卖股票都有两种状态 dp[0]   dp[1]
+
+//dp[0]表示当天手中没有股票的情况   1)可能是上一天手中已经卖出
+                                  2)可能是上一天含有股票，但是当天给出售了
+                                  则最大利润可以表示为：  dp_0[i]=max(dp_0[i-1],dp_1[i-1]+prices[i])
+                                  
+//dp_1表示当天手中含有股票的情况   1)可能是上一天手中含有股票
+                                 2)可能上一天没有股票，当天购入了一张股票，则利润会减少
+                                  则最大利润可以表示为：  dp_1[i]=max(dp_1[i-1],dp_0[i-1]-prices[i])
+                                  
+                                  
+//初始的时候设置 dp_0=0  因为最开始手中无股票自然是没有利润的
+                dp_1=-price[0]   因为最开始没有利润，所以购入股票后，其利润就会变成负数
+                
+                
+public int maxProfit(int[] prices) {
+         int len=prices.length;
+        int dp_0[]=new int[len];
+        int dp_1[]=new int[len];
+        dp_0[0]=0;
+        dp_1[0]=-prices[0];
+        for (int i = 1; i <len ; i++) {
+            dp_0[i]=Math.max(dp_0[i-1],dp_1[i-1]+prices[i]);
+            dp_1[i]=Math.max(dp_1[i-1],dp_0[i-1]-prices[i]);
+        }
+
+        return dp_0[len-1];
+    }
