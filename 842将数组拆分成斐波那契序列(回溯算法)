@@ -1,0 +1,42 @@
+ public static List<Integer> splitIntoFibonacci(String S) {
+            List<Integer> list= new ArrayList<>();
+            backtrack(list,S,S.length(),0,0,0);
+            return  list;
+    }
+
+    public  static  boolean backtrack(List<Integer> list, String S, int length, int index, int sum, int prev){
+
+        if(index == length)  return  list.size() >= 3;
+
+        long currLong = 0;
+
+        for(int i=index; i<length; i++){
+            if(i>index && S.charAt(i)=='0') break;
+
+            currLong = currLong*10 + S.charAt(i)-'0';
+            if(currLong > Integer.MAX_VALUE) break;
+            int curr=(int) currLong;
+            if(list.size()>=2) {
+                if(curr <sum) continue;
+                else if(curr>sum) break;
+            }
+            list.add(curr);
+            if(backtrack(list,S,length,i+1,prev+curr,curr))  return  true;
+            else  list.remove(list.size()-1);
+        }
+        return false;
+    }
+
+
+
+//回溯带剪值    index从0开始遍历整个字符串   
+               1.每一个新的数开始时首先判断其是否为0(数字不能为0开头) 否则推出当前循环 
+               2.其次判断是否超过整数范围  否则退出循环
+               3.如果list的大小超过2个 则判断当前整数是否大于前两个元素和，如果是则推出当前循环， 如果小于则继续递归
+               4 当满足与前两个元素相等的条件之后 则将当前元素加入到list中 
+               5满足条件则递归遍历  否则进行回溯
+               
+               
+               
+               
+               
