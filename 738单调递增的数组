@@ -1,0 +1,32 @@
+class Solution {
+    public int monotoneIncreasingDigits(int N) {
+        
+        char[] strN= Integer.toString(N).toCharArray();
+        int i=1;
+        while(i<strN.length && strN[i-1]<=strN[i]){
+            i++;
+        }
+
+        if(i<strN.length){
+            while(i>0 && strN[i-1]>strN[i]){
+                strN[i-1]-=1;
+                i-=1;
+            }
+            
+            for(i+=1; i<strN.length;++i){
+                strN[i]='9';
+            }
+        }
+        return Integer.parseInt(new String(strN));
+    }
+
+   
+}
+
+
+//思想   自行构造满足题目要求的答案  不需暴力破解
+
+// 首先找到不满足题目条件的第一位数
+// 然乎使得当前数减一  索引位置也相应减一（因为可能会碰到前后相同的数字 如果只是那一位减一可能不满足条件）
+
+//调整之后 是索引位置后的每一位都是9
