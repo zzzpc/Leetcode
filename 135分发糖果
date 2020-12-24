@@ -1,0 +1,31 @@
+
+
+ public static int candy(int[] ratings) {
+        int n=ratings.length;
+        int[] left=new int[n];
+        for (int i = 0; i < n; i++) {
+            if(i>0 && ratings[i]>ratings[i-1]) left[i]=left[i-1]+1;
+            else left[i]=1;
+        }
+
+        int right=0,ret=0;
+        for (int i = n-1; i >=0 ; i--) {
+            if(i<n-1&& ratings[i]>ratings[i+1]) right++;
+            else  right=1;
+            ret+=Math.max(left[i],right);
+        }
+
+        return ret;
+    }
+    
+    
+    
+    /*
+    
+    使用头尾两次遍历   从左到右的遍历  
+                     从右到左的遍历
+                     
+                     从左往右遍历的时候 存储每一个下标对应的值
+                     从左到右的遍历不用记录每一个下标的值 ，直接对头一次遍历所得到的值进行比较取较大值 然后累加求和即可
+    
+    */
