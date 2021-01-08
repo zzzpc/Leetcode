@@ -1,0 +1,29 @@
+class Solution {
+    public void rotate(int[] nums, int k) {
+        if(k==0) return;
+            int []copy=new int[nums.length];
+            for(int i=0;i<nums.length;i++){
+                copy[i]=nums[i];
+            }
+
+            for(int i=0;i<nums.length;i++){
+                nums[(i+k)%nums.length]=copy[i];
+            }
+
+      
+    }
+}
+
+
+//第一种方法使用辅助数组  空间复杂度为O(n)    k有可能会大于数组的长度  所以应该对nums.length取模   注意以后任何关于数组可能会越界的处理方案可以尝试取模进行计算
+
+
+
+//第二种方案也比较巧妙  通过三次翻转数组就可以达到题目要求的效果
+
+ 
+ 
+      --->---->   原始
+      <----<---   翻转一次
+      ----><---   翻转两次
+      ---->--->   翻转三次
