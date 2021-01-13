@@ -1,0 +1,17 @@
+ public String reverseWords(String s) {
+      s=s.trim();
+        int j=s.length()-1, i=j;
+        StringBuffer sb=new StringBuffer();
+        while(i>=0){
+            while (i>=0 && s.charAt(i)!=' ') i--;
+            sb.append(s.substring(i+1,j+1)+" ");
+            while (i>=0 && s.charAt(i)==' ') i--;
+            j=i;
+        }
+        return  sb.toString().trim();
+    }
+    
+    
+    //学到了   trim()去除首位空格字符
+    
+    //并且利用双指针来进行 O(n)的遍历  
