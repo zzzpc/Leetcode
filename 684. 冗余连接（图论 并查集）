@@ -1,0 +1,33 @@
+//考察并查集的使用
+
+//遍历所有的边界点   首先令所有结点的父节点都是自己 
+// 再遍历某条边的时候查看两结点的父节点是否位同一个 如果是则证明有环 直接返回
+      否则将两个结点进行合并  使得两个结点的父节点位同一个
+      
+  
+    public static  int[] findRedundantConnection(int[][] edges){
+            int nodeCount=edges.length;
+            int[] parent=new int[nodeCount+1];
+            for (int i = 1; i <=nodeCount; i++) {
+                parent[i]=i;
+            }
+
+            for (int i = 0; i <nodeCount ; i++) {
+                int[] edge=edges[i];
+                int node1=edge[0], node2=edge[1];
+                if(find(parent,node2)!=find(parent,node1)) union(parent,node1,node2);
+                else return edge;
+            }
+            return new int[0];
+    }
+
+    public static  void  union(int[] parent, int index1, int index2){
+        parent[find(parent,index1)]=find(parent,index2);
+    }
+
+    public static int find(int[] parent,  int index){
+        if(parent[index]!=index){
+            parent[index]=find(parent,parent[index]);
+        }
+        return  parent[index];
+    }
