@@ -1,0 +1,20 @@
+public class Solution {
+    public boolean VerifySquenceOfBST(int [] sequence) {
+        Stack<Integer> stack=new Stack<>();
+        if(sequence.length==0) return false;
+        int root=Integer.MAX_VALUE;
+        int len=sequence.length-1;
+        
+        for(int i=len;i>=0;i--){
+            if(sequence[i]>root) return false;
+            while(!stack.isEmpty() && stack.peek()>sequence[i]) root=stack.pop();
+            stack.add(sequence[i]);
+        }
+        return true;
+    }
+}
+
+
+//采用辅助栈的思想， 对数组进行倒序遍历 并且设置最初的root结点的值为正无穷， 
+//遍历数组的时候判断当前元素是否大于root如果是则返回false(因为在其左边出现的点一定是它的左子树其值不可能大于root)
+//当栈非空的时候 再判断栈顶结点是否大于当前结点，如果是则一致出栈并更新当前结点的root结点
