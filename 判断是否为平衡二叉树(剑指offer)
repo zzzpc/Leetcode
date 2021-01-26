@@ -1,0 +1,21 @@
+class Solution {
+    public boolean  isBalanced(TreeNode root) {
+   
+        return deep(root)!=-1;
+    }
+    public int  deep(TreeNode root){
+        if(root==null) return 0;
+        else{
+            int left=deep(root.left);
+            if(left==-1) return -1;
+            int right=deep(root.right);
+            if(right==-1) return -1;
+      
+            return Math.abs(left - right) < 2 ? Math.max(left, right) + 1 : -1;
+
+        }
+    }
+}
+
+
+//与求解二叉树的深度一样  优化的点在于递归放大过程中会进行剪枝, 利用标志位-1来判断当前子树不为平衡二叉树,如果返回值为-1 则直接退出递归，否则判断最后的值是否为-1
