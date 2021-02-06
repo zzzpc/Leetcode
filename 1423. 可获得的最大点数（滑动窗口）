@@ -1,0 +1,21 @@
+  //每次只能从开头或者结尾来选择卡牌     虽然是选择k张最大的， 但是剩余n-k张牌是连续的，只要从滑动窗口选择最小的n-k个数
+  
+  
+  class Solution {
+    public int maxScore(int[] cardPoints, int k) {
+            int len=cardPoints.length;
+            int sum=0;
+            for(int i=0;i<len;i++) sum+=cardPoints[i];
+            int sum_k=0;
+            for(int i=0;i<len-k;i++){
+                sum_k+=cardPoints[i];
+            }
+            int max=sum-sum_k;
+            for(int i=len-k;i<len;i++){
+                sum_k=sum_k-cardPoints[i-len+k]+cardPoints[i];
+                max=Math.max(max,sum-sum_k);
+            }
+
+            return max;
+    }
+}
